@@ -76,8 +76,8 @@ function git_current_branch() {
 # Gets the number of commits ahead from remote
 function git_commits_ahead() {
   if command git rev-parse --git-dir &>/dev/null; then
-    local commits="$(git rev-list --count @{upstream}..HEAD 2> /dev/null)"
-    if (( commits )); then
+    local commits="$(git rev-list --count @{upstream}..HEAD 2>/dev/null)"
+    if [[ -n "$commits" && "$commits" != 0 ]]; then
       echo "$ZSH_THEME_GIT_COMMITS_AHEAD_PREFIX$commits$ZSH_THEME_GIT_COMMITS_AHEAD_SUFFIX"
     fi
   fi
@@ -86,8 +86,8 @@ function git_commits_ahead() {
 # Gets the number of commits behind remote
 function git_commits_behind() {
   if command git rev-parse --git-dir &>/dev/null; then
-    local commits="$(git rev-list --count HEAD..@{upstream} 2> /dev/null)"
-    if (( commits )); then
+    local commits="$(git rev-list --count HEAD..@{upstream} 2>/dev/null)"
+    if [[ -n "$commits" && "$commits" != 0 ]]; then
       echo "$ZSH_THEME_GIT_COMMITS_BEHIND_PREFIX$commits$ZSH_THEME_GIT_COMMITS_BEHIND_SUFFIX"
     fi
   fi
